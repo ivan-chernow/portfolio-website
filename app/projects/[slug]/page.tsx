@@ -11,14 +11,14 @@ export function generateStaticParams() {
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = projectsData.find(
-    (project) => project.title.toLowerCase().replace(/\s+/g, "-") === params.slug
+    (project) =>
+      project.title.toLowerCase().replace(/\s+/g, "-") === params.slug
   );
 
   if (!project) {
     notFound();
   }
 
-  
   const longScreenshot =
     project.title === "Lawyer"
       ? "/lawyer.png"
@@ -36,7 +36,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           ← Назад
         </Link>
 
-        <h1 className="text-3xl font-bold mb-10 text-center">{project.title}</h1>
+        <h1 className="text-3xl font-bold mb-10 text-center">
+          {project.title}
+        </h1>
 
         {longScreenshot && (
           <>
@@ -50,7 +52,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                   objectFit: "contain",
                   width: "100%",
                   maxWidth: "100%",
-                  display: "block"
+                  display: "block",
                 }}
                 className="mx-auto"
               />
@@ -79,9 +81,13 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               {project.title === "Lawyer" && (
                 <>
                   <div>
-                    <h3 className="text-lg font-medium mb-3">Frontend Development</h3>
+                    <h3 className="text-lg font-medium mb-3">
+                      Frontend Development
+                    </h3>
                     <ul className="list-disc pl-6 space-y-2">
-                      <li>HTML5, CSS3, React для создания современного интерфейса</li>
+                      <li>
+                        HTML5, CSS3, React для создания современного интерфейса
+                      </li>
                       <li>Адаптивная верстка с Flexbox и Grid</li>
                       <li>Кроссбраузерная поддержка</li>
                       <li>Анимации и плавные переходы</li>
@@ -101,7 +107,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-3">Ключевые компоненты</h3>
+                    <h3 className="text-lg font-medium mb-3">
+                      Ключевые компоненты
+                    </h3>
                     <ul className="list-disc pl-6 space-y-2">
                       <li>Карточки услуг</li>
                       <li>Профили сотрудников</li>
@@ -125,7 +133,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-3">Основные функции</h3>
+                    <h3 className="text-lg font-medium mb-3">
+                      Основные функции
+                    </h3>
                     <ul className="list-disc pl-6 space-y-2">
                       <li>Система форм для заявок</li>
                       <li>Динамическая галерея портфолио</li>
@@ -143,7 +153,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-3">Техническая реализация</h3>
+                    <h3 className="text-lg font-medium mb-3">
+                      Техническая реализация
+                    </h3>
                     <ul className="list-disc pl-6 space-y-2">
                       <li>Composition API Vue.js</li>
                       <li>Управление состоянием</li>
@@ -159,4 +171,4 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       </div>
     </main>
   );
-} 
+}

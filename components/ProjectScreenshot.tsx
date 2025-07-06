@@ -2,7 +2,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function ProjectScreenshot({ src, alt }: { src: string; alt: string }) {
+export default function ProjectScreenshot({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

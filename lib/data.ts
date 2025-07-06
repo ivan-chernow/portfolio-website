@@ -49,8 +49,7 @@ export const projectsData = [
   },
   {
     title: "Windows Haus",
-    description:
-      "Сайт компании по установке окон с интерактивным функционалом",
+    description: "Сайт компании по установке окон с интерактивным функционалом",
     tags: [
       "Vue",
       "TypeScript",
@@ -65,13 +64,10 @@ export const projectsData = [
       "vue3-burger-menu",
       "vue3-side-panel",
       "vue3-transitions",
-      "yup"
+      "yup",
     ],
     imageUrl: WindowsImg,
   },
- 
-
-
 ] as const;
 
 export const skillsData = [
