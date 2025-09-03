@@ -1,5 +1,6 @@
 import { projectsData } from "@/lib/data";
 import Image from "next/image";
+import ProjectScreenshot from "@/components/ProjectScreenshot";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -41,23 +42,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </h1>
 
         {longScreenshot && (
-          <>
-            <div className="w-full h-[600px] overflow-y-auto rounded-lg border mb-8 bg-white flex justify-center items-start">
-              <Image
-                src={longScreenshot}
-                alt="Скриншот сайта"
-                width={1000}
-                height={2000}
-                style={{
-                  objectFit: "contain",
-                  width: "100%",
-                  maxWidth: "100%",
-                  display: "block",
-                }}
-                className="mx-auto"
-              />
-            </div>
-          </>
+          <ProjectScreenshot src={longScreenshot} alt="Скриншот сайта" />
         )}
 
         <div className="prose dark:prose-invert max-w-none">

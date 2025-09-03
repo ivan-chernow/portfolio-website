@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 export default function ProjectScreenshot({
@@ -10,21 +10,13 @@ export default function ProjectScreenshot({
   alt: string;
 }) {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  const handleOpen = () => setOpen(true);
 
   return (
     <>
       <div
         className="w-full max-w-[900px] h-[600px] overflow-y-auto rounded-lg border mb-8 cursor-zoom-in bg-white"
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         title="Нажмите для увеличения"
       >
         <Image
@@ -37,17 +29,26 @@ export default function ProjectScreenshot({
       </div>
       {open && (
         <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           onClick={() => setOpen(false)}
-          style={{ cursor: "zoom-out" }}
+          role="dialog"
+          aria-modal="true"
         >
-          <Image
-            src={src}
-            alt={alt}
-            width={1200}
-            height={3000}
-            style={{ maxHeight: "90vh", width: "auto", borderRadius: "12px" }}
-          />
+          <div
+            className="max-h-[90vh] max-w-[95vw] w-full rounded-lg bg-white p-2 overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="min-w-[600px]">
+              <Image
+                src={src}
+                alt={alt}
+                width={1400}
+                height={3200}
+                style={{ width: "130%", height: "auto", borderRadius: "8px", cursor: "zoom-out" }}
+                onClick={() => setOpen(false)}
+              />
+            </div>
+          </div>
         </div>
       )}
     </>
