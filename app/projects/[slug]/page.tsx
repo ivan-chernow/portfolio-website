@@ -10,10 +10,14 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const project = projectsData.find(
-    (project) =>
-      project.title.toLowerCase().replace(/\s+/g, "-") === params.slug
+    (project) => project.title.toLowerCase().replace(/\s+/g, "-") === slug
   );
 
   if (!project) {
@@ -22,9 +26,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   const longScreenshot =
     project.title === "Lawyer"
-      ? "/lawyer.png"
+      ? "/lawyer/lawyer-desktop.webp"
       : project.title === "Windows Haus"
-      ? "/haus.png"
+      ? "/windows-haus/okna-haus.webp"
+      : project.title === ("ZaraHome" as unknown as typeof project.title)
+      ? "/zarahome/zarahome-desktop.webp"
       : null;
 
   return (
@@ -41,14 +47,31 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           {project.title}
         </h1>
 
-        {longScreenshot && (
-          <ProjectScreenshot src={longScreenshot} alt="Скриншот сайта" />
+        {/* Описание проекта */}
+        <div className="max-w-none">
+          <p className="text-base sm:text-lg mb-6 text-gray-700 dark:text-gray-300">
+            {project.description}
+          </p>
+        </div>
+
+        {/* Медиа: видео-демо */}
+        {project.demoVideo && (
+          <div className="w-full max-w-[900px] h-[220px] sm:h-[360px] md:h-[506px] mb-8 rounded-lg border overflow-hidden bg-black">
+            <video
+              src={project.demoVideo as string}
+              poster={(project as any).demoPoster || (project as any).gallery?.[0]}
+              className="w-full h-full object-cover"
+              controls
+              playsInline
+              preload="metadata"
+              muted
+            />
+          </div>
         )}
+        {/* Убрали один лишний одиночный скрин вне галереи */}
 
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="text-lg mb-6">{project.description}</p>
-
-          <h2 className="text-xl font-semibold mb-4">Technologies Used</h2>
+        <div className="max-w-none">
+          <h2 className="text-xl font-semibold mb-4">Технологии</h2>
           <div className="flex flex-wrap gap-2 mb-8">
             {project.tags.map((tag, index) => (
               <span
@@ -60,98 +83,63 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             ))}
           </div>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Детали проекта</h2>
-            <div className="space-y-6">
-              {project.title === "Lawyer" && (
-                <>
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">
-                      Frontend Development
-                    </h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>
-                        HTML5, CSS3, React для создания современного интерфейса
-                      </li>
-                      <li>Адаптивная верстка с Flexbox и Grid</li>
-                      <li>Кроссбраузерная поддержка</li>
-                      <li>Анимации и плавные переходы</li>
-                      <li>Модульная структура кода</li>
-                    </ul>
-                  </div>
+          {/* Мини-галерея, если есть */}
+          {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 && (
+            <section className="mb-12">
+              <h2 className="text-xl font-semibold mb-4">Галерея</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {(project as any).gallery.map((src: string, idx: number) => (
+                  <Image
+                    key={idx}
+                    src={src}
+                    alt={`Скриншот ${idx + 1}`}
+                    width={900}
+                    height={600}
+                    className="w-full h-auto rounded-lg border object-cover"
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">UI/UX Features</h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Верхнее меню навигации</li>
-                      <li>Секции с услугами</li>
-                      <li>Команда специалистов</li>
-                      <li>Отзывы клиентов</li>
-                      <li>Контактная информация</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">
-                      Ключевые компоненты
-                    </h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Карточки услуг</li>
-                      <li>Профили сотрудников</li>
-                      <li>Модальные окна</li>
-                      <li>Формы обратной связи</li>
-                    </ul>
-                  </div>
-                </>
-              )}
-
-              {project.title === "Windows Haus" && (
-                <>
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Архитектура</h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Nuxt.js 3 (Vue.js 3)</li>
-                      <li>Модульная компонентная архитектура</li>
-                      <li>Четкая организация кодовой базы</li>
-                      <li>TypeScript для типобезопасности</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">
-                      Основные функции
-                    </h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Система форм для заявок</li>
-                      <li>Динамическая галерея портфолио</li>
-                      <li>Интеграция с Яндекс.Картами</li>
-                      <li>Система отзывов</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">UI компоненты</h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Интерактивные модальные окна</li>
-                      <li>Компоненты выбора услуг</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">
-                      Техническая реализация
-                    </h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                      <li>Composition API Vue.js</li>
-                      <li>Управление состоянием</li>
-                      <li>Переиспользуемые компоненты</li>
-                      <li>Интеграция сторонних сервисов</li>
-                    </ul>
-                  </div>
-                </>
-              )}
-            </div>
-          </section>
+          {/* Функционал проекта */}
+          {(() => {
+            const features: Record<string, string[]> = {
+              Lawyer: [
+                "Навигация: адаптивный хедер, якорная прокрутка",
+                "Секции услуг и карточки с CTA",
+                "Формы: обратная связь/заявка, валидация, тост-уведомления",
+                "Модальные окна: вход/подтверждения",
+                "Анимации: плавные появления блоков (Framer Motion)",
+              ],
+              "Windows Haus": [
+                "Каталог/галерея работ с фильтрами",
+                "Форма заявки на замер: валидация, отправка",
+                "Интеграция карт (точки/маршруты)",
+                "Отзывы и рейтинг",
+                "Модальные окна и слайдеры",
+              ],
+              ZaraHome: [
+                "Каталог с пагинацией/сортировкой/фильтрами",
+                "Корзина и избранное, промокоды",
+                "Оформление заказа: доставка/контакты, валидация",
+                "Профиль: адреса, смена пароля/e‑mail",
+                "Админ-модули: товары и промокоды",
+              ],
+            };
+            const list = features[project.title] || [];
+            if (list.length === 0) return null;
+            return (
+              <section className="mb-12">
+                <h2 className="text-xl font-semibold mb-4">Функционал</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  {list.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })()}
         </div>
       </div>
     </main>

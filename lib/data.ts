@@ -2,8 +2,6 @@ import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
 import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
-import LawyerImg from "@/public/lawyer.png";
-import WindowsImg from "@/public/haus.png";
 
 export const links = [
   {
@@ -45,7 +43,34 @@ export const projectsData = [
       "yup",
       "zustand",
     ],
-    imageUrl: LawyerImg,
+    imageUrl: "/lawyer/lawyer-desktop.webp",
+    demoVideo: "/lawyer/lawyer-presentation.mp4",
+    gallery: [
+      "/lawyer/lawyer-desktop.webp",
+      "/lawyer/lawyer-mobile.webp",
+    ],
+  },
+  {
+    title: "ZaraHome",
+    description:
+      "Интернет‑магазин товаров для дома: каталог, поиск, корзина, оформление заказа",
+    tags: [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "Redux/RTK",
+      "RTK Query",
+      "TailwindCSS",
+      "Framer Motion",
+      "Nest.js",
+      "TypeORM",
+      "PostgreSQL",
+    ],
+    imageUrl: "/zarahome/zarahome-desktop.webp",
+    demoVideo: undefined,
+    gallery: [
+      "/zarahome/zarahome-desktop.webp",
+    ],
   },
   {
     title: "Windows Haus",
@@ -66,7 +91,11 @@ export const projectsData = [
       "vue3-transitions",
       "yup",
     ],
-    imageUrl: WindowsImg,
+    imageUrl: "/windows-haus/okna-haus.webp",
+    demoVideo: "/windows-haus/okna-haus.mp4",
+    gallery: [
+      "/windows-haus/okna-haus.webp",
+    ],
   },
 ] as const;
 
