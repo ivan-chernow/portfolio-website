@@ -67,9 +67,12 @@ export const projectsData = [
       "PostgreSQL",
     ],
     imageUrl: "/zarahome/zarahome-desktop.webp",
-    demoVideo: undefined,
+    demoVideo: "/zarahome/Видео-05-10-2025 14_49_52.mp4",
     gallery: [
       "/zarahome/zarahome-desktop.webp",
+      "/zarahome/zarahome-catalog.webp",
+      "/zarahome/zarahome-navbar.webp",
+      "/zarahome/zarahome-lk.webp",
     ],
   },
   {

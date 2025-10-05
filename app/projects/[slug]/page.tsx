@@ -87,17 +87,153 @@ export default async function ProjectPage({
           {Array.isArray((project as any).gallery) && (project as any).gallery.length > 0 && (
             <section className="mb-12">
               <h2 className="text-xl font-semibold mb-4">Галерея</h2>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {(project as any).gallery.map((src: string, idx: number) => (
-                  <Image
-                    key={idx}
-                    src={src}
-                    alt={`Скриншот ${idx + 1}`}
-                    width={900}
-                    height={600}
-                    className="w-full h-auto rounded-lg border object-cover"
-                  />
-                ))}
+              {project.title === "ZaraHome" && (project as any).gallery.length >= 4 ? (
+                <div className="grid grid-cols-1 gap-4">
+                  {(project as any).gallery.slice(0, 4).map((src: string, idx: number) => (
+                    <Image
+                      key={idx}
+                      src={src}
+                      alt={`Скриншот ${idx + 1}`}
+                      width={1200}
+                      height={800}
+                      sizes="100vw"
+                      className="w-full h-auto rounded-lg border object-cover"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {(project as any).gallery.map((src: string, idx: number) => (
+                    <Image
+                      key={idx}
+                      src={src}
+                      alt={`Скриншот ${idx + 1}`}
+                      width={900}
+                      height={600}
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className="w-full h-auto rounded-lg border object-cover"
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* Разделы описания для ZaraHome */}
+          {project.title === "ZaraHome" && (
+            <section className="space-y-10 mb-12">
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Технологический стек</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium mb-2">Frontend</h3>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                      <li>React, Next.js (App Router), TypeScript</li>
+                      <li>Redux Toolkit + RTK Query (кэш, рефреш токены)</li>
+                      <li>TailwindCSS, Framer Motion</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-2">Server</h3>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                      <li>NestJS, TypeScript, Passport-JWT</li>
+                      <li>class-validator, Joi (валидация env)</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-2">Database</h3>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                      <li>PostgreSQL, TypeORM</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-2">Email</h3>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                      <li>Resend (SMTP/REST), Handlebars-шаблоны</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-2">Infra/Tools</h3>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                      <li>ESLint, Prettier, Docker-ready окружения</li>
+                      <li>.env с Joi-валидацией</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Детали проекта</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Моно-репозиторий: client (Next.js) + server (NestJS)</li>
+                  <li>Чистая архитектура клиента: app / entities / features / processes / shared / widgets</li>
+                  <li>Модульный бэкенд: auth, users, products, cart, orders, favorites, promocodes, email</li>
+                  <li>Единая конфигурация окружения: Joi, CORS, JWT, e-mail, rate limit, upload</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Frontend Development</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Состояние и API: RTK/RTK Query, кэширование и рефреш токенов</li>
+                  <li>SSR/CSR совместимость: безопасная работа с localStorage, проверки typeof window</li>
+                  <li>Оптимизация ререндеров: React.memo, useMemo, useCallback, виртуализация списков</li>
+                  <li>Оптимизация изображений: next/image, динамические sizes, lazy loading</li>
+                  <li>Архитектурные принципы: DRY, ранние return, явные типы и интерфейсы</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">UI/UX Features</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Навигация: адаптивный хедер, меню категорий, поиск</li>
+                  <li>Списки и карточки: виртуализированные каталоги, карточки товара, скелетоны</li>
+                  <li>Интерактивность: анимации (Framer Motion), пагинация, сортировка, фильтры</li>
+                  <li>Доступность: aria-*, tabIndex, корректные роли и фокусы</li>
+                  <li>Уведомления: тосты, лоадеры, прогресс-навигация</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Ключевые компоненты</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Каталог и карточки товара: просмотр, добавление в корзину/избранное</li>
+                  <li>Корзина и заказ: изменение количества, промокоды, оформление</li>
+                  <li>Профиль: данные пользователя, адреса, смена пароля/e‑mail</li>
+                  <li>Админ-панель: управление товарами/промокодами</li>
+                  <li>Модальные окна и формы: вход, подтверждения, авторизация/регистрация/восстановление</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Backend Features</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>JWT: access/refresh, refresh в cookie, @Roles + RolesGuard</li>
+                  <li>Доменные модули: продукты, корзина, избранное, заказы, промокоды</li>
+                  <li>Email-сервис: Resend, шаблоны Handlebars</li>
+                  <li>Файлы: загрузка изображений, UPLOAD_PATH, MAX_FILE_SIZE</li>
+                  <li>Кэш и rate limit: настраиваемые TTL и лимиты</li>
+                  <li>Валидация DTO: class-validator, глобальные пайпы</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Security & Config</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Joi-валидация env: обязательный JWT_SECRET (min 24)</li>
+                  <li>CORS: список доменов, credentials</li>
+                  <li>JWT-слой: JwtStrategy, JwtAuthGuard, рефреш-токены в БД</li>
+                  <li>Продакшен-настройки: secure-cookies, отключаемые логи БД</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-3">Performance</h2>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+                  <li>Клиент: мемоизация, виртуализация, next/image, ленивые секции</li>
+                  <li>Сервер: кэширование, индексируемые поля БД, лимиты запросов</li>
+                  <li>Медиа: сжатие изображений (рекомендация)</li>
+                </ul>
               </div>
             </section>
           )}
